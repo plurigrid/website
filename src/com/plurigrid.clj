@@ -1,12 +1,12 @@
-(ns xyz.plurigrid
+(ns com.plurigrid
   (:require [com.biffweb :as biff]
-            [xyz.plurigrid.email :as email]
-            [xyz.plurigrid.app :as app]
-            [xyz.plurigrid.home :as home]
-            [xyz.plurigrid.middleware :as mid]
-            [xyz.plurigrid.ui :as ui]
-            [xyz.plurigrid.worker :as worker]
-            [xyz.plurigrid.schema :as schema]
+            [com.plurigrid.email :as email]
+            [com.plurigrid.app :as app]
+            [com.plurigrid.home :as home]
+            [com.plurigrid.middleware :as mid]
+            [com.plurigrid.ui :as ui]
+            [com.plurigrid.worker :as worker]
+            [com.plurigrid.schema :as schema]
             [clojure.test :as test]
             [clojure.tools.logging :as log]
             [clojure.tools.namespace.repl :as tn-repl]
@@ -41,8 +41,8 @@
   (biff/add-libs)
   (biff/eval-files! ctx)
   (generate-assets! ctx)
-  (biff/catchall (require 'xyz.plurigrid-test))
-  (test/run-all-tests #"xyz.plurigrid.*-test"))
+  (biff/catchall (require 'com.plurigrid-test))
+  (test/run-all-tests #"com.plurigrid.*-test"))
 
 (def malli-opts
   {:registry (malr/composite-registry
@@ -57,7 +57,7 @@
    :biff.beholder/on-save #'on-save
    :biff.middleware/on-error #'ui/on-error
    :biff.xtdb/tx-fns biff/tx-fns
-   :xyz.plurigrid/chat-clients (atom #{})})
+   :com.plurigrid/chat-clients (atom #{})})
 
 (defonce system (atom {}))
 

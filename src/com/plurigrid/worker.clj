@@ -1,4 +1,4 @@
-(ns xyz.plurigrid.worker
+(ns com.plurigrid.worker
   (:require [clojure.tools.logging :as log]
             [com.biffweb :as biff :refer [q]]
             [xtdb.api :as xt]))

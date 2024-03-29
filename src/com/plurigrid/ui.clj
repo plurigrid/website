@@ -1,7 +1,7 @@
-(ns xyz.plurigrid.ui
+(ns com.plurigrid.ui
   (:require [cheshire.core :as cheshire]
             [clojure.java.io :as io]
-            [xyz.plurigrid.settings :as settings]
+            [com.plurigrid.settings :as settings]
             [com.biffweb :as biff]
             [ring.middleware.anti-forgery :as csrf]
             [ring.util.response :as ring-response]
@@ -29,7 +29,7 @@
    (-> ctx
        (merge #:base{:title settings/app-name
                      :lang "en-US"
-                     :icon "/img/glider.png"
+                     :icon "/img/logo.png"
                      :description (str settings/app-name " Description")
                      :image "https://clojure.org/images/clojure-logo-120b.png"})
        (update :base/head (fn [head]
@@ -37,10 +37,7 @@
                                      [:script {:src (js-path)}]
                                      [:script {:src "https://unpkg.com/htmx.org@1.9.10"}]
                                      [:script {:src "https://unpkg.com/htmx.org/dist/ext/ws.js"}]
-                                     [:script {:src "https://unpkg.com/hyperscript.org@0.9.8"}]
-                                     (when recaptcha
-                                       [:script {:src "https://www.google.com/recaptcha/api.js"
-                                                 :async "async" :defer "defer"}])]
+                                     [:script {:src "https://unpkg.com/hyperscript.org@0.9.8"}]]
                                     head))))
    body))
 

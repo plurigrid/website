@@ -1,4 +1,4 @@
-(ns xyz.plurigrid.schema)
+(ns com.plurigrid.schema)
 
 (def schema
   {:user/id :uuid

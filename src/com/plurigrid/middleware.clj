@@ -1,4 +1,4 @@
-(ns xyz.plurigrid.middleware
+(ns com.plurigrid.middleware
   (:require [com.biffweb :as biff]
             [muuntaja.middleware :as muuntaja]
             [ring.middleware.anti-forgery :as csrf]

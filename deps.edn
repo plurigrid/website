@@ -20,4 +20,4 @@
   :prod {:jvm-opts ["-XX:-OmitStackTraceInFastThrow"
                     "-XX:+CrashOnOutOfMemoryError"
                     "-Dbiff.env.BIFF_PROFILE=prod"]
-         :main-opts ["-m" "xyz.plurigrid"]}}}
+         :main-opts ["-m" "com.plurigrid"]}}}

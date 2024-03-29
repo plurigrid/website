@@ -1,8 +1,8 @@
-(ns xyz.plurigrid.email
+(ns com.plurigrid.email
   (:require [camel-snake-kebab.core :as csk]
             [camel-snake-kebab.extras :as cske]
             [clj-http.client :as http]
-            [xyz.plurigrid.settings :as settings]
+            [com.plurigrid.settings :as settings]
             [clojure.tools.logging :as log]
             [rum.core :as rum]))
 

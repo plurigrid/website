@@ -1,8 +1,8 @@
-(ns xyz.plurigrid.app
+(ns com.plurigrid.app
   (:require [com.biffweb :as biff :refer [q]]
-            [xyz.plurigrid.middleware :as mid]
-            [xyz.plurigrid.ui :as ui]
-            [xyz.plurigrid.settings :as settings]
+            [com.plurigrid.middleware :as mid]
+            [com.plurigrid.ui :as ui]
+            [com.plurigrid.settings :as settings]
             [rum.core :as rum]
             [xtdb.api :as xt]
             [ring.adapter.jetty9 :as jetty]
@@ -45,7 +45,7 @@
    [:.text-gray-600 (biff/format-date sent-at "dd MMM yyyy HH:mm:ss")]
    [:div text]])
 
-(defn notify-clients [{:keys [xyz.plurigrid/chat-clients]} tx]
+(defn notify-clients [{:keys [com.plurigrid/chat-clients]} tx]
   (doseq [[op & args] (::xt/tx-ops tx)
           :when (= op ::xt/put)
           :let [[doc] args]
@@ -120,7 +120,7 @@
      [:.h-6]
      (chat ctx))))
 
-(defn ws-handler [{:keys [xyz.plurigrid/chat-clients] :as ctx}]
+(defn ws-handler [{:keys [com.plurigrid/chat-clients] :as ctx}]
   {:status 101
    :headers {"upgrade" "websocket"
              "connection" "upgrade"}

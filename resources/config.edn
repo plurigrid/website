@@ -34,9 +34,9 @@
  :biff.system-properties/clojure.tools.logging.factory "clojure.tools.logging.impl/slf4j-factory"
 
  :biff.tasks/server                 #biff/env DOMAIN
- :biff.tasks/main-ns                xyz.plurigrid
- :biff.tasks/on-soft-deploy         "\"(xyz.plurigrid/on-save @xyz.plurigrid/system)\""
- :biff.tasks/generate-assets-fn     xyz.plurigrid/generate-assets!
+ :biff.tasks/main-ns                com.plurigrid
+ :biff.tasks/on-soft-deploy         "\"(com.plurigrid/on-save @com.plurigrid/system)\""
+ :biff.tasks/generate-assets-fn     com.plurigrid/generate-assets!
  :biff.tasks/css-output             "target/resources/public/css/main.css"
  :biff.tasks/deploy-untracked-files [#ref [:biff.tasks/css-output]
                                      "config.env"]
