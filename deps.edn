@@ -1,6 +1,8 @@
 {:paths ["src" "resources" "target/resources"]
- :deps {com.biffweb/biff                    #:git{:url "https://github.com/jacobobryant/biff", :sha "09ef8ce", :tag "v1.8.8"}
+ :deps {com.biffweb/biff                    #:git{:url "https://github.com/jacobobryant/biff", :sha "529660f", :tag "v1.0.0"}
         camel-snake-kebab/camel-snake-kebab {:mvn/version "0.4.3"}
+        remus/remus                         {:mvn/version "0.2.2"}
+        org.jsoup/jsoup                     {:mvn/version "1.11.3"}
         metosin/muuntaja                    {:mvn/version "0.6.8"}
         ring/ring-defaults                  {:mvn/version "0.3.4"}
         org.clojure/clojure                 {:mvn/version "1.11.1"}
@@ -11,7 +13,7 @@
         org.slf4j/jul-to-slf4j     {:mvn/version "1.7.36"}
         org.slf4j/jcl-over-slf4j   {:mvn/version "1.7.36"}}
  :aliases
- {:dev {:extra-deps {com.biffweb/tasks {:git/url "https://github.com/jacobobryant/biff", :git/sha "09ef8ce", :git/tag "v1.8.8", :deps/root "libs/tasks"}}
+ {:dev {:extra-deps {com.biffweb/tasks {:git/url "https://github.com/jacobobryant/biff", :git/sha "529660f", :git/tag "v1.0.0", :deps/root "libs/tasks"}}
         :extra-paths ["dev" "test"]
         :jvm-opts ["-XX:-OmitStackTraceInFastThrow"
                    "-XX:+CrashOnOutOfMemoryError"
@@ -20,4 +22,4 @@
   :prod {:jvm-opts ["-XX:-OmitStackTraceInFastThrow"
                     "-XX:+CrashOnOutOfMemoryError"
                     "-Dbiff.env.BIFF_PROFILE=prod"]
-         :main-opts ["-m" "xyz.plurigrid"]}}}
+         :main-opts ["-m" "com.eelchat"]}}}

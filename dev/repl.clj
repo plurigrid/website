@@ -1,5 +1,5 @@
 (ns repl
-  (:require [xyz.plurigrid :as main]
+  (:require [com.eelchat :as main]
             [com.biffweb :as biff :refer [q]]
             [clojure.edn :as edn]
             [clojure.java.io :as io]))
@@ -39,7 +39,7 @@
         ;; Add keys for any other secrets you've added to resources/config.edn
         secret-keys [:biff.middleware/cookie-secret
                      :biff/jwt-secret
-                     :mailersend/api-key
+                     :postmark/api-key
                      :recaptcha/secret-key
                      ; ...
                      ]
@@ -53,7 +53,29 @@
      :prod-secrets (get-secrets prod-config)
      :dev-secrets (get-secrets dev-config)}))
 
+(defn seed-channels []
+  (let [{:keys [biff/db] :as ctx} (get-context)]
+    (biff/submit-tx ctx
+      (for [[membership channel] (q db
+                          '{:find [membership channel]
+                            :where [[membership :membership/community community]
+                                    [channel :channel/community community]]})]
+        {:db/doc-type :message
+         :message/membership membership
+         :message/channel channel
+         :message/created-at :db/now
+         :message/text (str "Seed message " (rand-int 1000))}))))
+
 (comment
+  (seed-channels)
+
+  (let [{:keys [biff/db] :as ctx} (get-context)]
+    (q db
+       '{:find (pull message [*])
+         :where [[message :message/text]]}))
+
+  (com.eelchat.subscriptions/fetch-rss (get-context))
+
   ;; Call this function if you make a change to main/initial-system,
   ;; main/components, :tasks, :queues, config.env, or deps.edn.
   (main/refresh)

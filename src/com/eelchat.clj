@@ -1,12 +1,12 @@
-(ns xyz.plurigrid
+(ns com.eelchat
   (:require [com.biffweb :as biff]
-            [xyz.plurigrid.email :as email]
-            [xyz.plurigrid.app :as app]
-            [xyz.plurigrid.home :as home]
-            [xyz.plurigrid.middleware :as mid]
-            [xyz.plurigrid.ui :as ui]
-            [xyz.plurigrid.worker :as worker]
-            [xyz.plurigrid.schema :as schema]
+            [com.eelchat.email :as email]
+            [com.eelchat.app :as app]
+            [com.eelchat.home :as home]
+            [com.eelchat.middleware :as mid]
+            [com.eelchat.ui :as ui]
+            [com.eelchat.subscriptions :as sub]
+            [com.eelchat.schema :as schema]
             [clojure.test :as test]
             [clojure.tools.logging :as log]
             [clojure.tools.namespace.repl :as tn-repl]
@@ -19,8 +19,8 @@
   [app/module
    (biff/authentication-module {})
    home/module
-   schema/module
-   worker/module])
+   sub/module
+   schema/module])
 
 (def routes [["" {:middleware [mid/wrap-site-defaults]}
               (keep :routes modules)]
@@ -41,8 +41,8 @@
   (biff/add-libs)
   (biff/eval-files! ctx)
   (generate-assets! ctx)
-  (biff/catchall (require 'xyz.plurigrid-test))
-  (test/run-all-tests #"xyz.plurigrid.*-test"))
+  (biff/catchall (require 'com.eelchat-test))
+  (test/run-all-tests #"com.eelchat.*-test"))
 
 (def malli-opts
   {:registry (malr/composite-registry
@@ -57,16 +57,15 @@
    :biff.beholder/on-save #'on-save
    :biff.middleware/on-error #'ui/on-error
    :biff.xtdb/tx-fns biff/tx-fns
-   :xyz.plurigrid/chat-clients (atom #{})})
+   :com.eelchat/chat-clients (atom {})})
 
 (defonce system (atom {}))
 
 (def components
   [biff/use-aero-config
-   biff/use-xtdb
+   biff/use-xt
    biff/use-queues
-   biff/use-xtdb-tx-listener
-   biff/use-htmx-refresh
+   biff/use-tx-listener
    biff/use-jetty
    biff/use-chime
    biff/use-beholder])
@@ -91,5 +90,4 @@
   (doseq [f (:biff/stop @system)]
     (log/info "stopping:" (str f))
     (f))
-  (tn-repl/refresh :after `start)
-  :done)
+  (tn-repl/refresh :after `start))
