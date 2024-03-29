@@ -1,9 +1,9 @@
-(ns com.eelchat.home
+(ns com.plurigrid.home
   (:require [clj-http.client :as http]
             [com.biffweb :as biff]
-            [com.eelchat.middleware :as mid]
-            [com.eelchat.ui :as ui]
-            [com.eelchat.settings :as settings]
+            [com.plurigrid.middleware :as mid]
+            [com.plurigrid.ui :as ui]
+            [com.plurigrid.settings :as settings]
             [rum.core :as rum]
             [xtdb.api :as xt]))
 

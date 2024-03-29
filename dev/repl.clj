@@ -1,5 +1,5 @@
 (ns repl
-  (:require [com.eelchat :as main]
+  (:require [com.plurigrid :as main]
             [com.biffweb :as biff :refer [q]]
             [clojure.edn :as edn]
             [clojure.java.io :as io]))
@@ -29,9 +29,9 @@
 
 (defn add-fixtures []
   (biff/submit-tx (get-context)
-    (-> (io/resource "fixtures.edn")
-        slurp
-        edn/read-string)))
+                  (-> (io/resource "fixtures.edn")
+                      slurp
+                      edn/read-string)))
 
 (defn check-config []
   (let [prod-config (biff/use-aero-config {:biff.config/profile "prod"})
@@ -39,8 +39,8 @@
         ;; Add keys for any other secrets you've added to resources/config.edn
         secret-keys [:biff.middleware/cookie-secret
                      :biff/jwt-secret
-                     :postmark/api-key
-                     :recaptcha/secret-key
+                     :mailersend/api-key
+                     ;; :recaptcha/secret-key
                      ; ...
                      ]
         get-secrets (fn [{:keys [biff/secret] :as config}]
@@ -53,29 +53,7 @@
      :prod-secrets (get-secrets prod-config)
      :dev-secrets (get-secrets dev-config)}))
 
-(defn seed-channels []
-  (let [{:keys [biff/db] :as ctx} (get-context)]
-    (biff/submit-tx ctx
-      (for [[membership channel] (q db
-                          '{:find [membership channel]
-                            :where [[membership :membership/community community]
-                                    [channel :channel/community community]]})]
-        {:db/doc-type :message
-         :message/membership membership
-         :message/channel channel
-         :message/created-at :db/now
-         :message/text (str "Seed message " (rand-int 1000))}))))
-
 (comment
-  (seed-channels)
-
-  (let [{:keys [biff/db] :as ctx} (get-context)]
-    (q db
-       '{:find (pull message [*])
-         :where [[message :message/text]]}))
-
-  (com.eelchat.subscriptions/fetch-rss (get-context))
-
   ;; Call this function if you make a change to main/initial-system,
   ;; main/components, :tasks, :queues, config.env, or deps.edn.
   (main/refresh)
@@ -96,10 +74,10 @@
   (let [{:keys [biff/db] :as ctx} (get-context)
         user-id (biff/lookup-id db :user/email "hello@example.com")]
     (biff/submit-tx ctx
-      [{:db/doc-type :user
-        :xt/id user-id
-        :db/op :update
-        :user/email "new.address@example.com"}]))
+                    [{:db/doc-type :user
+                      :xt/id user-id
+                      :db/op :update
+                      :user/email "new.address@example.com"}]))
 
   (sort (keys (get-context)))
 
