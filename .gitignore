@@ -14,3 +14,7 @@
 .lsp/
 .portal/
 .shadow-cljs/
+.flox
+.cache
+*.log
+*.tmp
